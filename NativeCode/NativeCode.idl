@@ -1,0 +1,52 @@
+// NativeCode.idl : IDL source for NativeCode
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (NativeCode.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(DE133ABC-7C52-4A19-9E9C-44F4A5A54BE4),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface INativeAPI : IDispatch
+{
+	[id(1)] HRESULT GetInstance([out, retval] IUnknown** pResult);
+	[id(2)] HRESULT GetNumber([out, retval] LONG* pResult);
+};
+
+[
+	object,
+	uuid(b871ac0e-2923-468a-93f3-b0d36654a05d),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface INativeClass : IDispatch
+{
+	[id(1)] HRESULT CallGetInstance(INativeAPI* pAPI);
+	[id(2)] HRESULT CallGetNumber(INativeAPI* pAPI);
+};
+
+[
+	uuid(b6d661ee-b2a6-4fbe-91ab-7d4223505666),
+	version(1.0),
+]
+library NativeCodeLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(74b50739-1df8-4d9f-b2f2-033df90a4aa6)
+	]
+	coclass NativeClass
+	{
+		[default] interface INativeClass;
+	};
+};
+
+import "shobjidl.idl";
